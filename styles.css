@@ -235,7 +235,7 @@ main, .foot { position: relative; z-index: 1; }
   font-size: clamp(24px, 2.6vw, 36px); line-height: 1.18; font-weight: 500;
   letter-spacing: -.01em; max-width: 620px;
 }
-.hero__promise strong { color: var(--vino); }
+.hero__promise strong { color: var(--vino); white-space: nowrap; }
 .hero__sub { margin-top: 20px; max-width: 540px; color: rgba(42, 27, 20, .78); }
 .hero__ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 36px; }
 
@@ -501,41 +501,42 @@ main, .foot { position: relative; z-index: 1; }
 .brands__d { max-width: 520px; }
 
 /* ---------- Contacto ---------- */
-.contacto { background: var(--vino); color: var(--hueso); }
-.contacto__h { font-family: var(--f-display); font-weight: 400; font-size: clamp(52px, 12.6vw, 200px); line-height: .82; letter-spacing: -.04em; text-transform: uppercase; margin: 0 0 32px; }
-.contacto__mail {
-  display: inline-flex; gap: 16px; align-items: baseline;
-  font-size: clamp(20px, 3.2vw, 46px); font-weight: 700; letter-spacing: -.01em;
-  text-decoration: none; border-bottom: 3px solid var(--hueso); padding-bottom: 6px;
-  word-break: break-all; transition: color .3s, border-color .3s;
+.contacto { border-top: 1.5px solid var(--espresso); }
+.contacto__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(40px, 7vw, 120px); align-items: start; }
+.contacto .h2 { color: var(--vino); }
+.contacto__lead { margin-top: 24px; max-width: 460px; font-size: 18px; color: rgba(42, 27, 20, .8); }
+.contacto__topics { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 32px; }
+.contacto__topics a {
+  display: inline-flex; align-items: center; height: 36px; padding: 0 14px;
+  border: 1px solid var(--line); background: var(--hueso); text-decoration: none;
+  font-size: 12px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  transition: border-color .3s, color .3s;
 }
-.contacto__mail:hover { color: var(--arena); border-color: var(--arena); }
-.intents { display: grid; grid-template-columns: repeat(4, 1fr); margin-top: clamp(56px, 7vw, 96px); border-top: 1.5px solid var(--hueso); }
-.intents a {
-  position: relative; display: flex; flex-direction: column; gap: 6px; padding: 22px 48px 24px 0; text-decoration: none;
-  font-family: var(--f-display); font-size: clamp(20px, 1.8vw, 26px); line-height: 1.05; text-transform: uppercase;
-  border-right: 1px solid var(--line-light); margin-right: 20px;
+.contacto__topics a:hover { border-color: var(--vino); color: var(--vino); }
+.channels { border-top: 1.5px solid var(--espresso); background: var(--hueso); }
+.channels li { border-bottom: 1px solid var(--line); }
+.channel {
+  display: grid; grid-template-columns: 44px 1fr auto; align-items: center; gap: 18px;
+  padding: 20px 4px; text-decoration: none; background: transparent;
+  transition: background-color .35s var(--ease), padding .35s var(--ease);
 }
-.intents a:last-child { border-right: 0; }
-.intents small { font-family: var(--f-body); font-size: 11px; font-weight: 800; letter-spacing: .18em; color: var(--arena); }
-.intents a span { position: absolute; right: 20px; top: 22px; font-family: var(--f-body); transition: transform .35s var(--ease); }
-.intents a:hover { color: var(--arena); }
-.intents a:hover span { transform: translateX(6px); }
-.socials { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 48px; }
-.socials a {
-  display: inline-flex; align-items: center; height: 44px; padding: 0 18px;
-  border: 1.5px solid var(--hueso); text-decoration: none;
-  font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
-  transition: background-color .3s, color .3s;
-}
-.socials a:hover { background: var(--hueso); color: var(--vino); }
+.channel__ico { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); background: var(--hueso); transition: background-color .35s, border-color .35s; }
+.channel__ico svg { width: 20px; height: 20px; fill: none; stroke: var(--vino); stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: square; transition: stroke .35s; }
+.channel__txt { display: grid; gap: 2px; font-size: clamp(16px, 1.5vw, 19px); font-weight: 600; letter-spacing: -.005em; word-break: break-word; }
+.channel__txt small { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--cuero); }
+.channel__go { color: var(--cuero); transition: transform .35s var(--ease), color .35s; }
+.channel:hover { background: var(--hueso); padding-left: 12px; }
+.channel:hover .channel__ico { background: var(--vino); border-color: var(--vino); }
+.channel:hover .channel__ico svg { stroke: var(--hueso); }
+.channel:hover .channel__go { color: var(--vino); transform: translate(3px, -3px); }
 
-.foot { background: var(--espresso); color: var(--arena); padding: 28px 0; font-size: 14px; }
-.foot__in { display: flex; align-items: center; gap: 20px; }
-.foot__in p { margin-right: auto; }
-.foot__mark { display: grid; place-items: center; width: 36px; height: 36px; background: var(--vino); color: var(--hueso); font-family: var(--f-display); font-size: 13px; }
-.foot a { text-decoration: none; font-weight: 700; }
-.foot a:hover { color: var(--hueso); }
+/* ---------- Índice del ebook ---------- */
+.toc { grid-column: 1 / -1; display: grid; grid-template-columns: .8fr 1fr 1fr 1fr; gap: 28px; padding: clamp(28px, 4vw, 48px); border-top: 1.5px solid var(--espresso); background: var(--hueso); }
+.toc__t { font-family: var(--f-display); font-size: clamp(22px, 2vw, 30px); line-height: 1; text-transform: uppercase; margin: 10px 0 12px; }
+.toc__meta { font-size: 14px; font-weight: 700; color: var(--vino); }
+.toc__part { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--cuero); padding-bottom: 10px; border-bottom: 1.5px solid var(--espresso); }
+.toc ol li { display: grid; grid-template-columns: 30px 1fr; gap: 6px; padding: 8px 0; border-bottom: 1px solid var(--line); font-size: 14px; line-height: 1.35; }
+.toc ol li span { font-weight: 800; color: var(--vino); font-variant-numeric: tabular-nums; }
 
 /* ---------- Añadidos: fotos, reel, ebook, WhatsApp ---------- */
 .ayuda__para { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(28px, 5vw, 72px); margin-top: clamp(56px, 8vw, 110px); align-items: end; }
@@ -580,10 +581,17 @@ main, .foot { position: relative; z-index: 1; }
 .form__msg.is-ok { display: grid; gap: 10px; }
 .form__msg.is-ok a.wa { color: var(--arena); }
 
-.contacto__ways { display: flex; flex-wrap: wrap; gap: 18px 48px; align-items: baseline; }
-.contacto__wa { font-size: clamp(16px, 1.6vw, 22px); font-weight: 700; text-decoration: none; border-bottom: 2px solid var(--arena); color: var(--arena); padding-bottom: 4px; }
-.contacto__wa:hover { color: var(--hueso); border-color: var(--hueso); }
-.foot__in a { white-space: nowrap; }
+
+
+.foot { background: var(--espresso); color: var(--arena); padding: 32px 0; font-size: 13px; }
+.foot__in { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 16px 40px; }
+.foot__brand { display: flex; align-items: center; gap: 14px; }
+.foot__mark { display: grid; place-items: center; width: 36px; height: 36px; flex: none; background: var(--vino); color: var(--hueso); font-family: var(--f-display); font-size: 13px; }
+.foot__links { display: flex; gap: 24px; }
+.foot a { text-decoration: none; font-weight: 700; white-space: nowrap; }
+.foot a:hover { color: var(--hueso); }
+.foot__credit { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; }
+.foot__credit strong { color: var(--hueso); font-weight: 800; }
 
 .wa-float {
   position: fixed; right: 16px; bottom: 16px; z-index: 40;
@@ -708,4 +716,17 @@ main, .foot { position: relative; z-index: 1; }
   .hero__media .stat { margin-left: 16px; }
   .metodo__cta { grid-template-columns: 1fr; }
   .metodo__cta img { aspect-ratio: 16 / 10; }
+}
+
+/* ---------- Responsive: índice, contacto, pie ---------- */
+@media (max-width: 1100px) {
+  .toc { grid-template-columns: 1fr 1fr; }
+  .toc__head { grid-column: 1 / -1; }
+  .foot__in { grid-template-columns: 1fr auto; }
+  .foot__credit { grid-column: 1 / -1; }
+}
+@media (max-width: 860px) {
+  .contacto__grid { grid-template-columns: 1fr; }
+  .toc { grid-template-columns: 1fr; }
+  .foot__in { grid-template-columns: 1fr; }
 }

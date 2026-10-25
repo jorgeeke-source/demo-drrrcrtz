@@ -14,7 +14,10 @@
     leadEndpoint: '',
     // WhatsApp en formato internacional sin signos
     whatsapp: '50769306663',
-    // Redes: { label: 'Instagram', url: 'https://…' } — solo se muestran las que tengan url
-    socials: []
+    // Redes: solo se muestran las que tengan url
+    socials: {
+      linkedin: '',
+      instagram: 'https://www.instagram.com/yeritzellgonzalez/'
+    }
   };
 })();

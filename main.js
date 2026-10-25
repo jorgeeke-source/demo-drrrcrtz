@@ -187,22 +187,34 @@
       name.textContent = steps[i].getAttribute('data-name');
     }
 
+    // Línea de lectura: la fase activa es la que la cruza
+    function anchor() {
+      var vis = $('.metodo__visual');
+      if (window.innerWidth <= 860 && vis) return (parseFloat(getComputedStyle(vis).top) || 72) + vis.offsetHeight + 48;
+      return window.innerHeight * .36;
+    }
+
     function update() {
-      var vh = window.innerHeight;
-      var r = list.getBoundingClientRect();
-      var p = clamp((vh * .55 - r.top) / (r.height - vh * .25), 0, 1);
+      var a = anchor(), cur = 0, local = 0;
+      var first = steps[0].getBoundingClientRect();
+      var last = steps[steps.length - 1].getBoundingClientRect();
+      if (a < first.top) { cur = 0; local = 0; }
+      else if (a >= last.bottom) { cur = steps.length - 1; local = 1; }
+      else {
+        steps.forEach(function (s, j) {
+          var r = s.getBoundingClientRect();
+          if (a >= r.top && a < r.bottom) { cur = j; local = (a - r.top) / r.height; }
+        });
+      }
+      var p = clamp((cur + local) / steps.length, 0, 1);
       path.style.strokeDashoffset = L * (1 - p);
       var pt = path.getPointAtLength(L * p);
       dot.setAttribute('cx', pt.x); dot.setAttribute('cy', pt.y);
-      var cur = 0;
-      steps.forEach(function (s, j) { if (s.getBoundingClientRect().top < vh * .55) cur = j; });
       setActive(cur);
     }
 
     function goTo(i) {
-      var vis = $('.metodo__visual');
-      var stuckTop = window.innerWidth <= 860 ? vis.offsetHeight + 72 : 120;
-      var y = steps[i].getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - stuckTop - 8;
+      var y = steps[i].getBoundingClientRect().top + (window.scrollY || window.pageYOffset) - anchor() + 24;
       window.scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
     }
     tabs.forEach(function (b) { b.addEventListener('click', function () { goTo(+b.getAttribute('data-go')); }); });
@@ -356,13 +368,12 @@
 
   /* ---------- Redes desde el manifiesto ---------- */
   function initSocials() {
-    var box = $('#socials');
-    if (!box || !B.socials) return;
-    B.socials.forEach(function (s) {
-      if (!s || !s.url) return;
-      var a = document.createElement('a');
-      a.href = s.url; a.target = '_blank'; a.rel = 'noopener'; a.textContent = s.label;
-      box.insertBefore(a, box.firstChild);
+    var S = B.socials || {};
+    $$('[data-social]').forEach(function (li) {
+      var url = S[li.getAttribute('data-social')];
+      if (!url) return;
+      $('a', li).href = url;
+      li.hidden = false;
     });
   }
 
