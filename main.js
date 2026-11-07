@@ -298,58 +298,99 @@
     });
   }
 
-  /* ---------- Ebook: registro y descarga ---------- */
+  /* ---------- Ebook: registro en Google Sheets y descarga ---------- */
   function initLead() {
     var form = $('#leadForm'), msg = $('#leadMsg');
     if (!form) return;
+    var select = form.pais, btn = $('button[type=submit]', form);
+    (window.__COUNTRIES__ || []).forEach(function (c) {
+      if (c[1] === 'PA') return;
+      var o = document.createElement('option');
+      o.value = c[1]; o.textContent = c[0] + ' (+' + c[2] + ')';
+      o.setAttribute('data-prefix', c[2]);
+      select.appendChild(o);
+    });
+    var label = btn.innerHTML;
+
+    function fail(text) {
+      msg.classList.remove('is-ok');
+      msg.textContent = text;
+      btn.disabled = false; btn.innerHTML = label;
+    }
+
+    function done(first) {
+      msg.classList.add('is-ok');
+      msg.innerHTML = '';
+      var p = document.createElement('span');
+      p.textContent = '¡Gracias, ' + first + '! Tu ebook está listo.';
+      msg.appendChild(p);
+      var a = document.createElement('a');
+      a.href = B.ebookUrl; a.setAttribute('download', ''); a.className = 'btn btn--hueso';
+      a.textContent = 'Descargar el PDF ↓';
+      msg.appendChild(a);
+      form.reset();
+      btn.disabled = false; btn.innerHTML = label;
+    }
+
     form.addEventListener('submit', function (e) {
       e.preventDefault();
-      var nombre = form.nombre, email = form.email, ok = form.ok;
+      var nombre = form.nombre, email = form.email, wa = form.whatsapp, ok = form.ok;
+      var digits = wa.value.replace(/\D/g, '');
       var bad = false;
-      [nombre, email, ok].forEach(function (f) { f.classList.remove('is-bad'); });
+      [nombre, email, wa, ok].forEach(function (f) { f.classList.remove('is-bad'); });
       if (!nombre.value.trim()) { nombre.classList.add('is-bad'); bad = true; }
       if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value.trim())) { email.classList.add('is-bad'); bad = true; }
+      if (digits.length < 6) { wa.classList.add('is-bad'); bad = true; }
       if (!ok.checked) { ok.classList.add('is-bad'); bad = true; }
-      msg.classList.remove('is-ok');
-      if (bad) { msg.textContent = 'Revisa tu nombre, tu correo y la casilla de aceptación.'; return; }
+      if (bad) { fail('Completa tu nombre, correo, WhatsApp y la casilla de aceptación para descargar el ebook.'); return; }
 
-      var data = { nombre: nombre.value.trim(), email: email.value.trim(), whatsapp: (form.whatsapp ? form.whatsapp.value.trim() : ''), recurso: 'Ebook Metodología del Agente Exitoso' };
+      var opt = select.options[select.selectedIndex];
+      var data = {
+        nombre: nombre.value.trim(), email: email.value.trim(),
+        pais: opt.textContent.replace(/\s*\(\+\d+\)$/, ''), prefijo: '+' + opt.getAttribute('data-prefix'),
+        whatsapp: digits, consentimiento: true, empresa: form.empresa.value
+      };
       var first = data.nombre.split(' ')[0];
+      msg.classList.remove('is-ok'); msg.textContent = '';
+      btn.disabled = true; btn.textContent = 'Enviando…';
 
-      function done() {
-        msg.classList.add('is-ok');
-        msg.innerHTML = '';
-        var p = document.createElement('span');
-        p.textContent = '¡Gracias, ' + first + '! Tu ebook está listo.';
-        msg.appendChild(p);
-        if (B.ebookUrl) {
-          var a = document.createElement('a');
-          a.href = B.ebookUrl; a.setAttribute('download', ''); a.className = 'btn btn--hueso';
-          a.textContent = 'Descargar el PDF ↓';
-          msg.appendChild(a);
-        }
-        if (B.whatsapp) {
-          var w = document.createElement('a');
-          w.href = 'https://wa.me/' + B.whatsapp + '?text=' + encodeURIComponent('Hola Yeritzell, soy ' + data.nombre + '. Ya descargué el ebook.');
-          w.target = '_blank'; w.rel = 'noopener'; w.className = 'wa';
-          w.textContent = 'Escríbele a Yeritzell por WhatsApp →';
-          msg.appendChild(w);
-        }
-        form.reset();
-        $$('input, button[type=submit]', form).forEach(function (el) { if (el.type !== 'submit') el.blur(); });
-      }
+      // text/plain evita la consulta previa de CORS que Apps Script no responde
+      fetch(B.leadEndpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(data)
+      }).then(function (r) { return r.json(); })
+        .then(function (res) { if (!res.ok) throw new Error('rechazado'); done(first); })
+        .catch(function () { fail('No se pudo registrar. Revisa tus datos e inténtalo de nuevo.'); });
+    });
+  }
 
-      if (B.leadEndpoint) {
-        fetch(B.leadEndpoint, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-          body: JSON.stringify(data)
-        }).then(function (r) { if (!r.ok) throw new Error(r.status); done(); })
-          .catch(function () { msg.textContent = 'No se pudo enviar. Inténtalo de nuevo en un momento.'; });
-      } else {
-        // Demo: no se envía ni se guarda ningún dato.
-        done();
-      }
+  /* ---------- Contacto: formulario hacia WhatsApp ---------- */
+  function initContact() {
+    var form = $('#contactForm'), msg = $('#contactMsg');
+    if (!form) return;
+    var labels = {
+      conferencia: 'Contratar conferencia', mentoria: 'Mentoría 1:1',
+      grupal: 'Capacitación grupal', marca: 'Colaboración de marca'
+    };
+    $$('[data-interest]').forEach(function (a) {
+      a.addEventListener('click', function () {
+        var r = $('input[value="' + a.getAttribute('data-interest') + '"]', form);
+        if (r) r.checked = true;
+      });
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var interes = $('input[name=interes]:checked', form);
+      var nombre = form.nombre.value.trim();
+      form.nombre.classList.toggle('is-bad', !nombre);
+      if (!interes || !nombre) { msg.textContent = 'Elige qué te interesa y escribe tu nombre.'; return; }
+      msg.textContent = '';
+      var lines = ['Hola Yeritzell, me interesa: ' + labels[interes.value] + '.', 'Nombre: ' + nombre];
+      if (form.empresa.value.trim()) lines.push('Empresa: ' + form.empresa.value.trim());
+      if (form.mensaje.value.trim()) lines.push('Mensaje: ' + form.mensaje.value.trim());
+      var url = 'https://wa.me/' + B.whatsapp + '?text=' + encodeURIComponent(lines.join('\n'));
+      if (!window.open(url, '_blank', 'noopener')) window.location.href = url;
     });
   }
 
@@ -370,10 +411,10 @@
   function initSocials() {
     var S = B.socials || {};
     $$('[data-social]').forEach(function (li) {
-      var url = S[li.getAttribute('data-social')];
-      if (!url) return;
-      $('a', li).href = url;
-      li.hidden = false;
+      var url = S[li.getAttribute('data-social')], a = $('a', li);
+      if (url) { a.href = url; return; }
+      a.removeAttribute('target');
+      a.addEventListener('click', function (e) { e.preventDefault(); });
     });
   }
 
@@ -387,6 +428,7 @@
     safe('magnetic', initMagnetic);
     safe('video', initVideo);
     safe('lead', initLead);
+    safe('contact', initContact);
     safe('reel', initReel);
     safe('socials', initSocials);
     var y = $('#year'); if (y) y.textContent = new Date().getFullYear();
