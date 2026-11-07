@@ -418,21 +418,23 @@ main, .foot { position: relative; z-index: 1; }
 @keyframes marquee { to { transform: translateX(-50%); } }
 
 /* ---------- Recursos ---------- */
-.video { display: grid; grid-template-columns: .8fr 1.2fr; gap: clamp(28px, 5vw, 72px); align-items: center; margin-bottom: clamp(64px, 9vw, 128px); }
-.video__meta p:not(.cell__tag) { margin-bottom: 22px; max-width: 420px; }
-.video__frame { position: relative; aspect-ratio: 16 / 9; background: var(--espresso); outline: 1.5px solid var(--espresso); outline-offset: 10px; }
-.video__frame iframe, .video__poster, .video__poster img { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-.video__poster img { object-fit: cover; transition: transform 1s var(--ease), opacity .5s; }
-.video__poster:hover img { transform: scale(1.03); }
-.video__play {
-  position: absolute; left: 0; bottom: 0; display: flex; align-items: center; gap: 14px;
-  background: var(--vino); color: var(--blanco); padding: 0 26px 0 0; height: 72px;
-  font-size: 13px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase;
-  transition: background-color .35s var(--ease);
-}
-.video__play span { display: grid; place-items: center; width: 72px; height: 72px; background: var(--espresso); font-size: 20px; }
-.video__poster:hover .video__play { background: var(--espresso); }
-.video__poster:hover .video__play span { background: var(--vino); }
+
+/* ---------- Testimonios ---------- */
+.testimonios .sec__head { max-width: 1160px; }
+.testimonios .h2 { font-size: clamp(34px, 5vw, 72px); }
+.testis { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; align-items: stretch; }
+.testi { display: flex; flex-direction: column; gap: 10px; padding: clamp(18px, 2vw, 24px); background: var(--hueso); border: 1.5px solid var(--espresso); }
+.testi--slot { border-style: dashed; }
+.testi__media { position: relative; aspect-ratio: 4 / 3; display: grid; place-items: center; background: var(--arena); overflow: hidden; margin-bottom: 8px; }
+.testi__media img, .testi__media video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.testi__play { display: grid; place-items: center; width: 60px; height: 60px; background: var(--vino); color: var(--hueso); font-size: 18px; }
+.testi__initial { font-family: var(--f-display); font-size: 44px; color: var(--cuero); }
+.testi__mark { font-family: var(--f-display); font-size: 120px; line-height: 1; height: .62em; color: var(--vino); margin-top: 12px; flex: 1; }
+.testi__tag { font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; color: var(--cuero); }
+.testi__soon { font-size: 16px; font-weight: 600; color: rgba(42, 27, 20, .7); }
+.testi__quote { margin: 0; flex: 1; font-size: 17px; font-weight: 600; line-height: 1.45; }
+.testi__who { font-family: var(--f-display); font-size: 15px; text-transform: uppercase; padding-top: 12px; border-top: 1px solid var(--line); }
+.testi__who small { display: block; margin-top: 4px; font-family: var(--f-body); font-size: 13px; font-weight: 600; text-transform: none; color: var(--cuero); }
 
 .ebook { display: grid; grid-template-columns: .9fr 1.1fr; background: var(--arena); border: 1.5px solid var(--espresso); }
 .ebook__cover { display: grid; place-items: center; padding: clamp(40px, 6vw, 80px); border-right: 1.5px solid var(--espresso); perspective: 1200px; background: var(--hueso); }
@@ -596,8 +598,6 @@ main, .foot { position: relative; z-index: 1; }
 .pillar__body .pillar__n { position: absolute; right: clamp(20px, 2.4vw, 32px); top: -46px; font-size: 76px; background: var(--hueso); padding: 0 6px; transition: background-color .5s var(--ease), -webkit-text-stroke-color .5s; }
 .pillar:hover .pillar__body .pillar__n { background: var(--vino); }
 .pillar__body .pillar__t { margin: 6px 0 12px; padding: 0; }
-
-.video__note { position: absolute; right: 0; bottom: -34px; font-size: 12px; color: var(--cuero); }
 .ebook__cover { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 36px; }
 .book { width: min(100%, 460px); aspect-ratio: 16 / 9; transform: rotateY(-14deg) rotateX(5deg); }
 .book img { width: 100%; height: 100%; object-fit: cover; box-shadow: 16px 16px 0 var(--vino); outline: 1.5px solid var(--espresso); }
@@ -683,11 +683,6 @@ main, .foot { position: relative; z-index: 1; }
   .pillar { min-height: 0; }
   .pillar__n { font-size: 64px; }
   .pillar__t { padding-top: 28px; }
-
-  .video { grid-template-columns: 1fr; }
-  .video__frame { order: -1; margin: 0 10px; }
-  .video__play { height: 56px; }
-  .video__play span { width: 56px; height: 56px; }
   .ebook { grid-template-columns: 1fr; }
   .ebook__cover { border-right: 0; border-bottom: 1.5px solid var(--espresso); padding: 44px 24px 56px; }
   .book { width: min(220px, 58vw); }
@@ -738,7 +733,6 @@ main, .foot { position: relative; z-index: 1; }
   .metodo__cta .btn { grid-column: 1 / -1; }
   .reel, .hoy__top .reel { grid-column: 1; grid-row: auto; width: 72%; max-width: 320px; justify-self: start; margin: 0 0 40px 10px; }
   .pillar__img { aspect-ratio: 16 / 11; }
-  .video__note { position: static; margin-top: 8px; }
   .ebook__cover { align-items: center; }
 }
 @media (max-width: 520px) {
@@ -763,4 +757,9 @@ main, .foot { position: relative; z-index: 1; }
 @media (max-width: 520px) {
   .interest { grid-template-columns: 1fr; }
   .phone { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 860px) {
+  .testis { grid-template-columns: 1fr; }
+  .testi__mark { flex: none; }
 }

@@ -19,7 +19,7 @@
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%235C0F22'/%3E%3Ctext x='32' y='46' font-family='Arial Black,Arial' font-weight='900' font-size='40' text-anchor='middle' fill='%23F4EEE5'%3EY%3C/text%3E%3C/svg%3E">
   <link rel="preload" href="ArchivoBlack-Regular.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="Manrope-Variable.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="stylesheet" href="styles.css?v=20261107b">
+  <link rel="stylesheet" href="styles.css?v=20261107c">
   <script>document.documentElement.classList.add('js');</script>
   <script type="application/ld+json">
   {
@@ -79,7 +79,8 @@
       <a href="#ayuda">A quién ayudo</a>
       <a href="#metodo">Metodología</a>
       <a href="#hoy">Hoy</a>
-      <a href="#recursos">Recursos</a>
+      <a href="#testimonios">Testimonios</a>
+      <a href="#recursos">Ebook</a>
       <a href="#colaborar">Colaborar</a>
     </nav>
     <a href="#contacto" class="btn btn--vino btn--sm nav__cta" data-magnetic>Contratar</a>
@@ -90,10 +91,11 @@
       <a href="#ayuda"><small>01</small>A quién ayudo</a>
       <a href="#metodo"><small>02</small>Metodología</a>
       <a href="#hoy"><small>03</small>Lo que hago hoy</a>
-      <a href="#recursos"><small>04</small>Recursos gratis</a>
-      <a href="#manifiesto"><small>05</small>Manifiesto</a>
-      <a href="#colaborar"><small>06</small>Colaborar</a>
-      <a href="#contacto"><small>07</small>Contacto</a>
+      <a href="#testimonios"><small>04</small>Testimonios</a>
+      <a href="#recursos"><small>05</small>Ebook gratis</a>
+      <a href="#manifiesto"><small>06</small>Manifiesto</a>
+      <a href="#colaborar"><small>07</small>Colaborar</a>
+      <a href="#contacto"><small>08</small>Contacto</a>
     </nav>
     <a class="menu__mail" href="mailto:yeritzell@gyp-seguros.com">yeritzell@gyp-seguros.com</a>
   </div>
@@ -105,7 +107,7 @@
         <div class="hero__grid">
           <div class="hero__text">
             <p class="hero__roles reveal">
-              <span>Speaker Internacional</span><i></i><span>Empresaria</span><i></i><span>Experta en Liderazgo y Ventas Remotas</span>
+              <span>Speaker Internacional</span><i></i><span>Empresaria</span><i></i><span>Experta en Liderazgo y Conferencias</span>
             </p>
             <blockquote class="hero__quote">
               <p class="hero__said">
@@ -346,29 +348,42 @@
       </div>
     </section>
 
-    <!-- ============ RECURSOS: ENTRENAMIENTO + EBOOK ============ -->
+    <!-- ============ TESTIMONIOS ============ -->
+    <section class="sec testimonios" id="testimonios">
+      <div class="wrap">
+        <header class="sec__head reveal">
+          <p class="kicker"><span>04</span>Testimonios</p>
+          <h2 class="h2">Lo que dicen quienes<br><mark>ya vivieron el método.</mark></h2>
+        </header>
+
+        <!-- Marco provisional: se sustituye solo al añadir testimonios en manifest.js -->
+        <div class="testis" id="testis">
+          <article class="testi testi--slot reveal">
+            <div class="testi__media"><span class="testi__play" aria-hidden="true">▶</span></div>
+            <p class="testi__tag">Video</p>
+            <p class="testi__soon">Testimonio próximamente</p>
+          </article>
+          <article class="testi testi--slot reveal">
+            <p class="testi__mark" aria-hidden="true">“</p>
+            <p class="testi__tag">Texto</p>
+            <p class="testi__soon">Testimonio próximamente</p>
+          </article>
+          <article class="testi testi--slot reveal">
+            <div class="testi__media"><span class="testi__initial" aria-hidden="true">YG</span></div>
+            <p class="testi__tag">Foto y texto</p>
+            <p class="testi__soon">Testimonio próximamente</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ RECURSOS: EBOOK ============ -->
     <section class="sec recursos" id="recursos">
       <div class="wrap">
         <header class="sec__head reveal">
-          <p class="kicker"><span>04</span>Recursos gratuitos</p>
+          <p class="kicker"><span>05</span>Ebook gratuito</p>
           <h2 class="h2">Empieza hoy,<br><mark>sin costo.</mark></h2>
         </header>
-
-        <div class="video reveal">
-          <div class="video__meta">
-            <p class="cell__tag">Entrenamiento gratuito</p>
-            <h3 class="h3">Planificación financiera y familiar</h3>
-            <p>Un webinar sobre cómo proteger y planificar el futuro de una familia: la base de toda conversación de valor con un cliente.</p>
-            <a class="link" href="https://www.youtube.com/watch?v=BB-jb_EY4y0" target="_blank" rel="noopener">Verlo en YouTube ↗</a>
-          </div>
-          <div class="video__frame" id="video">
-            <a href="https://www.youtube.com/watch?v=BB-jb_EY4y0" class="video__poster" target="_blank" rel="noopener" aria-label="Reproducir el entrenamiento de planificación financiera">
-              <img src="entrenamiento.webp" alt="Webinar de planificación financiera y familiar" width="1280" height="720" loading="lazy">
-              <span class="video__play"><span>▶</span>Reproducir</span>
-            </a>
-            <p class="video__note">Al reproducir se carga YouTube.</p>
-          </div>
-        </div>
 
         <div class="ebook reveal" id="ebook">
           <div class="ebook__cover">
@@ -448,7 +463,7 @@
     <!-- ============ MANIFIESTO ============ -->
     <section class="sec manifiesto" id="manifiesto">
       <div class="wrap">
-        <p class="kicker kicker--light"><span>05</span>Manifiesto · La filosofía del agente exitoso</p>
+        <p class="kicker kicker--light"><span>06</span>Manifiesto · La filosofía del agente exitoso</p>
         <div class="manifest" id="manifest">
           <p>No vendemos pólizas. Ayudamos a las personas a proteger <mark>su patrimonio, sus ingresos, su familia y sus metas futuras.</mark></p>
           <p>Escuchamos más de lo que hablamos.</p>
@@ -466,7 +481,7 @@
     <section class="sec colaborar" id="colaborar">
       <div class="wrap">
         <header class="sec__head reveal">
-          <p class="kicker"><span>06</span>Contratar conferencias y entrenamiento</p>
+          <p class="kicker"><span>07</span>Contratar conferencias y entrenamiento</p>
           <h2 class="h2">Tres formas de<br><mark>contratarme.</mark></h2>
         </header>
 
@@ -506,7 +521,7 @@
     <section class="sec contacto" id="contacto">
       <div class="wrap contacto__grid">
         <div class="contacto__intro reveal">
-          <p class="kicker"><span>07</span>Contacto y redes</p>
+          <p class="kicker"><span>08</span>Contacto y redes</p>
           <h2 class="h2">Hablemos.</h2>
           <p class="contacto__lead">Cuéntame qué necesitas. Se abrirá WhatsApp con tu mensaje listo y te respondo personalmente.</p>
           <form class="form contact-form" id="contactForm" novalidate>
@@ -543,9 +558,6 @@
           <li data-social="facebook"><a class="channel" href="#" target="_blank" rel="noopener">
             <span class="channel__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 3h18v18H3z"/><path d="M15.5 8h-1.3c-1 0-1.7.7-1.7 1.7V21M10 13h5"/></svg></span>
             <span class="channel__txt"><small>Facebook</small>Yeritzell González</span><span class="channel__go" aria-hidden="true">↗</span></a></li>
-          <li><a class="channel" href="https://www.youtube.com/watch?v=BB-jb_EY4y0" target="_blank" rel="noopener">
-            <span class="channel__ico" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2.5 5.5h19v13h-19z"/><path d="M10 9v6l5-3z"/></svg></span>
-            <span class="channel__txt"><small>YouTube</small>Entrenamiento gratuito</span><span class="channel__go" aria-hidden="true">↗</span></a></li>
         </ul>
       </div>
     </section>
@@ -570,8 +582,8 @@
     <span>¿Hablamos?</span>
   </a>
 
-  <script defer src="manifest.js?v=20261107b"></script>
-  <script defer src="countries.js?v=20261107b"></script>
-  <script defer src="main.js?v=20261107b"></script>
+  <script defer src="manifest.js?v=20261107c"></script>
+  <script defer src="countries.js?v=20261107c"></script>
+  <script defer src="main.js?v=20261107c"></script>
 </body>
 </html>

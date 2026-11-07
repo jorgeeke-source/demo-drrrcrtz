@@ -281,20 +281,41 @@
     }
   }
 
-  /* ---------- Vídeo: carga el reproductor al pulsar ---------- */
-  function initVideo() {
-    var frame = $('#video'), poster = frame && $('.video__poster', frame);
-    if (!poster || !B.videoId) return;
-    poster.addEventListener('click', function (e) {
-      e.preventDefault();
-      var f = document.createElement('iframe');
-      f.src = 'https://www.youtube-nocookie.com/embed/' + B.videoId + '?autoplay=1&rel=0';
-      f.title = 'Entrenamiento gratuito: planificación financiera y familiar';
-      f.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-      f.setAttribute('allowfullscreen', '');
-      f.setAttribute('referrerpolicy', 'strict-origin-when-cross-origin');
-      frame.innerHTML = '';
-      frame.appendChild(f);
+  /* ---------- Testimonios desde el manifiesto ---------- */
+  function initTestimonials() {
+    var box = $('#testis'), list = B.testimonials || [];
+    if (!box || !list.length) return;
+    box.innerHTML = '';
+    list.forEach(function (t) {
+      var card = document.createElement('article');
+      card.className = 'testi';
+      if (t.video || t.foto) {
+        var media = document.createElement('div');
+        media.className = 'testi__media';
+        var el = document.createElement(t.video ? 'video' : 'img');
+        if (t.video) {
+          el.src = t.video; el.controls = true; el.preload = 'none'; el.playsInline = true;
+          if (t.foto) el.poster = t.foto;
+        } else {
+          el.src = t.foto; el.alt = 'Testimonio de ' + t.nombre; el.loading = 'lazy';
+        }
+        media.appendChild(el);
+        card.appendChild(media);
+      }
+      if (t.texto) {
+        var q = document.createElement('blockquote');
+        q.className = 'testi__quote'; q.textContent = '“' + t.texto + '”';
+        card.appendChild(q);
+      }
+      var who = document.createElement('p');
+      who.className = 'testi__who'; who.textContent = t.nombre;
+      if (t.cargo) {
+        var c = document.createElement('small');
+        c.textContent = t.cargo;
+        who.appendChild(c);
+      }
+      card.appendChild(who);
+      box.appendChild(card);
     });
   }
 
@@ -426,7 +447,7 @@
     safe('loop', initLoop);
     safe('manifest', initManifest);
     safe('magnetic', initMagnetic);
-    safe('video', initVideo);
+    safe('testimonials', initTestimonials);
     safe('lead', initLead);
     safe('contact', initContact);
     safe('reel', initReel);
